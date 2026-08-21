@@ -52,9 +52,7 @@ The main objective of this project is to create a simple web-based **Gym Managem
 
 ## 👨‍💻 Author
 
-**Sumanth Kanaujiya**
-
-GitHub: https://github.com/Sumanth8970
+**T MANOJ**
 
 ---
 
