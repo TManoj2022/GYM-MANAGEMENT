@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gym Management System</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #2c3e50;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    nav a {
+      color: white;
+      padding: 15px 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background-color: #34495e;
+    }
+    section {
+      display: none;
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+      background-color: white;
+      margin-top: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    .active {
+      display: block;
+    }
+    form input, form select, form button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    form button {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    form button:hover {
+      background-color: #219150;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background-color: #2c3e50;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    .action-btn {
+      margin: 0 4px;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .edit-btn {
+      background-color: #3498db;
+      color: white;
+    }
+    .delete-btn {
+      background-color: #e74c3c;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Gym Management System</h1>
+  </header>
+  <nav>
+    <a href="#" onclick="showSection('home')">Home</a>
+    <a href="#" onclick="showSection('registration')">Registration</a>
+    <a href="#" onclick="showSection('payment')">Payment</a>
+    <a href="#" onclick="showSection('members')">Members</a>
+  </nav>
+
+  <section id="home" class="active">
+    <h2>Welcome to the Gym Management System</h2>
+    <p>Use the navigation above to manage members and payments.</p>
+  </section>
+
+  <section id="registration">
+    <h2>Member Registration</h2>
+    <form id="registrationForm">
+
+
+      <input type="text" placeholder="Member Number" id="memberNumber" required>
+      <input type="text" placeholder="Full Name" id="fullName" required>
+      <input type="email" placeholder="Email Address" id="email" required>
+      <input type="text" placeholder="Phone Number" id="phone" required>
+      <label>Date of Birth</label>
+      <input type="date" id="dob" required>
+      <select id="gender" required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+      <select id="plan" required>
+        <option value="">Membership Plan</option>
+        <option value="Basic">Basic</option>
+        <option value="Premium">Premium</option>
+        <option value="Elite">Elite</option>
+      </select>
+      <label>Start Date</label>
+      <input type="date" id="startDate" required>
+      <label>Expire Date</label>
+      <input type="date" id="expireDate" required>
+      <button type="submit">Register</button>
+    </form>
+  </section>
+
+  <section id="payment">
+    <h2>Payment</h2>
+    <form id="paymentForm">
+      <input type="text" placeholder="Member ID" id="paymentMemberId" required>
+      <input type="number" placeholder="Amount" id="amount" required>
+      <select id="paymentMethod" required>
+        <option value="">Select Payment Method</option>
+        <option value="Cash">Cash</option>
+        <option value="Card">Card</option>
+        <option value="Online">Online</option>
+      </select>
+      <button type="submit">Submit Payment</button>
+    </form>
+  </section>
+
+  <section id="members">
+    <h2>Registered Members</h2>
+    <table id="membersTable">
+      <thead>
+        <tr>
+          <th>Member Number</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Gender</th>
+          <th>Plan</th>
+          <th>Start Date</th>
+          <th>Expire Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Members will be listed here -->
+      </tbody>
+    </table>
+  </section>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const memberData = [
+        document.getElementById('memberNumber').value,
+        document.getElementById('fullName').value,
+        document.getElementById('phone').value,
+        document.getElementById('gender').value,
+        document.getElementById('plan').value,
+        document.getElementById('startDate').value,
+        document.getElementById('expireDate').value
+      ];
+
+      const table = document.getElementById('membersTable').querySelector('tbody');
+      const row = table.insertRow();
+
+      memberData.forEach(value => {
+        const cell = row.insertCell();
+        cell.textContent = value;
+      });
+
+      const actionCell = row.insertCell();
+      const editBtn = document.createElement('button');
+      editBtn.textContent = 'Edit';
+      editBtn.className = 'action-btn edit-btn';
+      editBtn.onclick = () => editMember(row);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.className = 'action-btn delete-btn';
+      deleteBtn.onclick = () => row.remove();
+
+      actionCell.appendChild(editBtn);
+      actionCell.appendChild(deleteBtn);
+
+      this.reset();
+      alert('Member registered successfully!');
+    });
+     // Set the max date to today - 18 years
+     window.onload = function() {
+      const today = new Date();
+      const year = today.getFullYear() - 18;
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      const maxDate = `${year}-${month}-${day}`;
+      document.getElementById("dob").setAttribute("max", maxDate);
+    };
+
+    function editMember(row) {
+      const cells = row.querySelectorAll('td');
+      const inputs = ['memberNumber', 'fullName','email','phone', 'dob', 'gender', 'plan', 'startDate', 'expireDate'];
+      inputs.forEach((id, index) => {
+        document.getElementById(id).value = cells[index].textContent;
+      });
+      row.remove();
+      showSection('registration');
+    }
+
+    document.getElementById('paymentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const memberId = document.getElementById('paymentMemberId').value;
+      const amount = document.getElementById('amount').value;
+      const method = document.getElementById('paymentMethod').value;
+      alert(`Payment of $${amount} by ${method} for member ${memberId} recorded.`);
+      this.reset();
+    });
+  </script>
+</body>
+</html>
